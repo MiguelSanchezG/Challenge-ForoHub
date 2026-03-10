@@ -6,8 +6,23 @@ https://github.com/MiguelSanchezG/Challenge-Forohub
 
 ## Tabla de contenido
 
+- [Tecnologías](#tecnologías)
 - [Instalación](#instalación)
 - [Uso](#uso)
+
+## Tecnologías
+
+- **Java 21**
+- **Spring Boot**
+- **Spring Security**
+- **JWT (JSON Web Token)** para autenticación
+- **Flyway** para migraciones de base de datos
+- **PostgreSQL** como sistema de base de datos
+- **Maven** para gestión de dependencias
+- **IntelliJ IDEA** como entorno de desarrollo
+- **Insomnia / Postman** para probar los endpoints de la API
+- **pgAdmin** para la administración de la base de datos
+- **Git y GitHub** para control de versiones
 
   
 ## Instalación
@@ -29,11 +44,17 @@ https://github.com/MiguelSanchezG/Challenge-Forohub
 
 ![nombreBase](./imagenes/nombreBase.jpg)
 
+
 3. ahora vamos a abrir el proyecto con nuestra IDE de preferencia, en este caso se usa IntelliJ, luego buscamos el archivo application.properties, esto para definir cierta informacion necesaria, en este caso, para la prueba, se puede reemplazar.
-   +{DB_HOST} por localhost:8080
-   +{DB_NAME} por forohub
-   +{DB_USER} por el usuario que definimos en al iniciar por primera vez el pgAdmin
-   +{DB_PASSWORD} por la contraseña que definimos con ese nombre
+
+   -{DB_HOST} por localhost:8080
+   
+   -{DB_NAME} por forohub
+   
+   -{DB_USER} por el usuario que definimos en al iniciar por primera vez el pgAdmin
+   
+   -{DB_PASSWORD} por la contraseña que definimos con ese nombre
+   
 
 ![configuracionDB](./imagenes/configuracionDB.jpg)
 
@@ -41,9 +62,11 @@ https://github.com/MiguelSanchezG/Challenge-Forohub
 
 ![claseProyecto](./imagenes/claseProyecto.jpg)
 
+
 5. Entonces le daremos click derecho en la clase y buscamos la opcion que dice Run
 
 ![iniciarApp](./imagenes/iniciarApp.jpg)
+
 
 6. despues de la ejecucion del proyecto, las tablas necesarias de la base de datos se crearan, entonces, para poder hacer uso es necesario usar el insert, para generar un perfil y se permita hacer las request. El token generado se creo colocando la contraseña que se desea en bcrypt, que se puede buscar sencillamente en google y luego generarla, poniendo lo generado en la parte de Tokengenerado. tambien se agregan otras consultas para por ejemplo verificar la informacion.
 
@@ -51,17 +74,12 @@ https://github.com/MiguelSanchezG/Challenge-Forohub
         SELECT * FROM topicos
         SELECT * FROM perfiles
         insert into perfiles values(1,'prueba@forohub.com','Tokengenerado');
+```
 
-
-| Metodo | Endpoint |
-|------|------|
-| GET | /topicos |
-| POST | /topicos |
-| DELETE | /topicos/{id} |
 
 7. y ahi empezara la app, la cual para este caso se puede usar el Insomnia o postman. se adjunta el JSON de ejemplo de como se pide la entrada.
 
-```JSON
+```json
       {
       	"titulo":"informacion",
       	"mensaje":"en este momento estamos probando el forohub",
@@ -77,24 +95,22 @@ https://github.com/MiguelSanchezG/Challenge-Forohub
 
 8. pero primero, se hara la request del login al URI proporcionado, y en la parte del body agregamos la informacion del login que deberia ser de la siguiente manera, pero segun el perfil que recien se creo, luego copearemos el tokenJWT que nos genera, y este debe pegarse en la parte del AUTH del imsomnia, esto para todos los request de ahora en adelante.
 
-```bash
-http://localhost:8080/login
+```bash http://localhost:8080/login```
 
-```bash
+```json
   {
 	"login":"miguel.guluma@forohub.com",
 	"contrasena":"123456"
   }
-
+```
 
 ![login](./imagenes/login.jpg)
 
-![auth](./Imagenes/auth.jpg)
+![auth](./imagenes/auth.jpg)
 
 9. empezamos con el post registro topico, se adjunta la URI para el request. aqui debemos usar el ejemplo que se dio de la entrada, segun los datos requeridos para generar el topico, una vez se pone la informacion necesaria solo es cuestion de darle al send, ya esto se comprueba mejor en la base de datos.
 
-```bash
-      http://localhost:8080/topicos
+```bash http://localhost:8080/topicos ```
 
 ![post](./imagenes/postTopico.jpg)
 
@@ -102,28 +118,24 @@ http://localhost:8080/login
 
 10. ahora el get, es sencillo, solo generar la request get con el siguiente URI. esto nos muestra todos los topicos añadidos. tambien esta la opcion de buscar por id, es solo añadir un "/#" al final del link, se proporciona ejemplo
 
-```bash
-      http://localhost:8080/topicos
+```bash http://localhost:8080/topicos ```
+```bash http://localhost:8080/topicos/8```
 
-```bash
-      http://localhost:8080/topicos/2
-
-      esto seria para ver el topico numero 2
+      esto seria para ver el topico numero 8
 
 ![getLista](./imagenes/getListaTopico.jpg)
 ![get](./imagenes/getTopico.jpg)
 
 11. ahora el PUT, donde podemos actualizar la informacion que necesitemos, solo es hacer el request con el siguiente link, donde debemos proporcionar tambien el id en la base del JSON
 
-```bash
-      http://localhost:8080/topicos/2
+```bash http://localhost:8080/topicos/8 ```
 
 ![putTopico](./imagenes/putTopico.jpg)
 ![putTopicoRes](./imagenes/putTopicoRes.jpg)
 
+
 12. por ultimo la eliminacio, donde solo es poner el indice al final del topico que deseemos eliminar. esto se comprueba mejor en la base de datos.
 
 ![eliminar](./imagenes/deleteTopico.jpg)
-
 ![eliminarRes](./imagenes/deleteTopicoRes.jpg)
 
